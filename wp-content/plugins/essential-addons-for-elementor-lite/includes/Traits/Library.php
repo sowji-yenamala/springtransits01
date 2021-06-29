@@ -37,7 +37,7 @@ trait Library
      * @param $key
      * @return string
      */
-    public function get_extension_settings($page_settings = [], $global_settings = [], $extension, $key)
+    public function get_extension_settings($page_settings = [], $global_settings = [], $extension = '', $key = '')
     {
         if (isset($page_settings) && $page_settings->get_settings($extension) == 'yes') {
             return $page_settings->get_settings($key);
@@ -150,6 +150,10 @@ trait Library
     {
         check_ajax_referer('essential-addons-elementor', 'security');
 
+        if(!current_user_can('manage_options')){
+            wp_send_json_error(__('you are not allowed to do this action', 'essential-addons-for-elementor-lite'));
+        }
+
         if (isset($_REQUEST['posts'])) {
             if (!empty($_POST['posts'])) {
                 foreach (json_decode($_POST['posts']) as $post) {
@@ -179,7 +183,7 @@ trait Library
             return true;
         }
         
-        if (isset($_REQUEST['action'])) {
+        if (!empty($_REQUEST['action']) && !$this->check_background_action($_REQUEST['action'])) {
             return true;
         }
 
@@ -211,7 +215,7 @@ trait Library
             return false;
         }
 
-        if (isset($_REQUEST['action'])) {
+        if (!empty($_REQUEST['action']) && !$this->check_background_action($_REQUEST['action'])) {
             return false;
         }
 
@@ -279,5 +283,17 @@ trait Library
         $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
 
         return "$scheme$user$pass$host$port$path$query$fragment";
+    }
+
+    /**
+     * Allow to load asset for some pre defined action query param in elementor preview
+     * @return bool
+     */
+    public function check_background_action($action_name){
+        $allow_action = ['subscriptions'];
+        if (in_array($action_name, $allow_action)){
+            return true;
+        }
+        return false;
     }
 }

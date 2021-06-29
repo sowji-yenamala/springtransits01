@@ -13,6 +13,7 @@ use Elementor\Plugin;
 use Elementor\Repeater;
 use Elementor\Utils;
 use Elementor\Widget_Base;
+use Essential_Addons_Elementor\Classes\Helper as HelperCLass;
 use Essential_Addons_Elementor\Traits\Login_Registration;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -1077,10 +1078,10 @@ class Login_Register extends Widget_Base {
 					'width'       => '100',
 				],
 			] ),
-			'title_field' => '{{{ field_label }}}',
+			'title_field' => '{{ field_label }}',
 		];
 		if ( $this->pro_enabled ) {
-			$rf['title_field'] = '{{{ elementor.helpers.renderIcon( this, icon, {}, "i", "panel" ) || \'<i class="{{ icon }}" aria-hidden="true"></i>\' }}} {{{ field_label }}}';
+			$rf['title_field'] = '{{{ elementor.helpers.renderIcon( this, icon, {}, "i", "panel" ) || \'<i class="{{ icon }}" aria-hidden="true"></i>\' }}} {{ field_label }}';
 		}
 		$this->add_control( 'register_fields', $rf );
 
@@ -1154,14 +1155,21 @@ class Login_Register extends Widget_Base {
 			],
 		] );
 
+        if(current_user_can('create_users')){
+            $user_role = $this->get_user_roles();
+        }else{
+            $user_role = [
+                get_option( 'default_role' ) =>  ucfirst(get_option( 'default_role' ))
+            ];
+        }
+
 		$this->add_control( 'register_user_role', [
 			'label'     => __( 'New User Role', 'essential-addons-for-elementor-lite' ),
 			'type'      => Controls_Manager::SELECT,
 			'default'   => '',
-			'options'   => $this->get_user_roles(),
+			'options'   => $user_role,
 			'separator' => 'before',
 		] );
-
 
 		$this->end_controls_section();
 	}
@@ -3699,12 +3707,16 @@ class Login_Register extends Widget_Base {
 		$form_logo_id        = ! empty( $this->ds['lr_form_logo']['id'] ) ? $this->ds['lr_form_logo']['id'] : '';
 		$this->form_logo     = Group_Control_Image_Size::get_attachment_image_src( $form_logo_id, 'lr_form_logo', $this->ds );
 		$this->form_logo_pos = ! empty( $this->ds['lr_form_logo_position'] ) ? $this->ds['lr_form_logo_position'] : 'inline';
-
+		$login_redirect_url = '';
+		if ( ! empty( $this->ds['redirect_after_login'] ) && 'yes' === $this->ds['redirect_after_login'] ) {
+			$login_redirect_url = !empty( $this->ds[ 'redirect_url' ][ 'url' ] ) ? esc_url( $this->ds[ 'redirect_url' ][ 'url' ] ) : '';
+		}
 		?>
-        <div class="eael-login-registration-wrapper"
+        <div class="eael-login-registration-wrapper <?php echo empty( $form_image_id ) ? '' : esc_attr( 'has-illustration' ); ?>"
              data-is-ajax="<?php echo esc_attr( $this->get_settings_for_display( 'enable_ajax' ) ); ?>"
              data-widget-id="<?php echo esc_attr( $this->get_id() ); ?>"
              data-recaptcha-sitekey="<?php echo esc_attr( get_option( 'eael_recaptcha_sitekey' ) ); ?>"
+             data-redirect-to="<?php echo esc_attr( $login_redirect_url ); ?>"
         >
 			<?php
 			$this->print_login_form();
@@ -3723,7 +3735,7 @@ class Login_Register extends Widget_Base {
 			//Reg link related
 			$reg_link_action = ! empty( $this->ds['registration_link_action'] ) ? $this->ds['registration_link_action'] : 'form';
 			$show_reg_link   = ( $this->user_can_register && 'yes' === $this->get_settings( 'show_register_link' ) );
-			$reg_link_text   = ! empty( $this->get_settings( 'registration_link_text' ) ) ? $this->get_settings( 'registration_link_text' ) : __( 'Register', 'essential-addons-for-elementor-lite' );
+			$reg_link_text   = ! empty( $this->get_settings( 'registration_link_text' ) ) ? HelperCLass::eael_wp_kses($this->get_settings( 'registration_link_text' )) : __( 'Register', 'essential-addons-for-elementor-lite' );
 			$parts           = explode( "\n", $reg_link_text );
 			$reg_link_text   = array_pop( $parts );
 			$reg_message     = array_shift( $parts );
@@ -3770,7 +3782,7 @@ class Login_Register extends Widget_Base {
 
 			//Loss password
 			$show_lp = ( ! empty( $this->ds['show_lost_password'] ) && 'yes' === $this->ds['show_lost_password'] );
-			$lp_text = ! empty( $this->ds['lost_password_text'] ) ? $this->ds['lost_password_text'] : __( 'Forgot password?', 'essential-addons-for-elementor-lite' );
+			$lp_text = ! empty( $this->ds['lost_password_text'] ) ? HelperCLass::eael_wp_kses($this->ds['lost_password_text']) : __( 'Forgot password?', 'essential-addons-for-elementor-lite' );
 			$lp_link = sprintf( '<a href="%s">%s</a>', esc_attr( wp_lostpassword_url() ), $lp_text );
 			if ( ! empty( $this->ds['lost_password_link_type'] ) && 'custom' === $this->ds['lost_password_link_type'] ) {
 				$lp_url  = ! empty( $this->ds['lost_password_url']['url'] ) ? $this->ds['lost_password_url']['url'] : wp_lostpassword_url();
@@ -3954,7 +3966,7 @@ class Login_Register extends Widget_Base {
 			//Login link related
 			$lgn_link_action = ! empty( $this->ds['login_link_action'] ) ? $this->ds['login_link_action'] : 'form';
 			$show_lgn_link   = 'yes' === $this->get_settings( 'show_login_link' );
-			$lgn_link_text   = ! empty( $this->get_settings( 'login_link_text' ) ) ? $this->get_settings( 'login_link_text' ) : __( 'Login', 'essential-addons-for-elementor-lite' );
+			$lgn_link_text   = ! empty( $this->get_settings( 'login_link_text' ) ) ? HelperCLass::eael_wp_kses($this->get_settings( 'login_link_text' )) : __( 'Login', 'essential-addons-for-elementor-lite' );
 			$btn_text        = ! empty( $this->ds['reg_button_text'] ) ? $this->ds['reg_button_text'] : '';
 
 			$parts                = explode( "\n", $lgn_link_text );
@@ -4232,7 +4244,7 @@ class Login_Register extends Widget_Base {
 		if ( empty( $this->ds['show_terms_conditions'] ) || 'yes' !== $this->ds['show_terms_conditions'] ) {
 			return;
 		}
-		$l         = isset( $this->ds['acceptance_label'] ) ? $this->ds['acceptance_label'] : '';
+		$l         = isset( $this->ds['acceptance_label'] ) ? HelperCLass::eael_wp_kses($this->ds['acceptance_label']) : '';
 		$parts     = explode( "\n", $l );
 		$label     = array_shift( $parts );
 		$link_text = array_pop( $parts );

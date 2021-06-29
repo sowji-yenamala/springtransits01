@@ -70,6 +70,7 @@ trait Generator
             $this->uid = $this->generate_uid($uid);
             $this->request_requires_update = $this->request_requires_update();
         }
+        //exit;
     }
 
     public function generate_uid($str)
@@ -84,9 +85,11 @@ trait Generator
 
     public function request_requires_update()
     {
-        $elements = get_option($this->uid . '_elements');
+        $elements = get_option($this->uid . '_eael_elements');
         $editor_updated_at = get_option('eael_editor_updated_at');
-        $post_updated_at = get_option($this->uid . '_updated_at');
+        $post_updated_at = get_option($this->uid . '_eael_updated_at');
+
+
 
         if ($editor_updated_at === false) {
             update_option('eael_editor_updated_at', strtotime('now'));
@@ -95,13 +98,18 @@ trait Generator
         if ($elements === false) {
             return true;
         }
+
+	    if ( $this->check_password_protected_post() ) {
+		    return true;
+	    }
+
         if ($post_updated_at === false) {
             return true;
         }
+
         if ($editor_updated_at != $post_updated_at) {
             return true;
         }
-
         return false;
     }
 
@@ -171,7 +179,7 @@ trait Generator
 
     public function collect_elements_in_document($post_id)
     {
-        if (!Plugin::$instance->db->is_built_with_elementor($post_id)) {
+        if (!Plugin::$instance->documents->get( $post_id )->is_built_with_elementor()) {
             return;
         }
 
@@ -187,6 +195,8 @@ trait Generator
         if (!apply_filters('eael/is_plugin_active', 'elementor/elementor.php')) {
             return;
         }
+
+
 
         if ($this->is_running_background()) {
             return;
@@ -205,7 +215,7 @@ trait Generator
         }
 
         // check if already updated
-        if (get_option('eael_editor_updated_at') == get_option($this->uid . '_updated_at')) {
+        if (get_option('eael_editor_updated_at') == get_option($this->uid . '_eael_updated_at')) {
             return;
         }
 
@@ -217,10 +227,16 @@ trait Generator
             $this->loaded_elements[] = 'custom-js';
         }
 
+        if ((get_the_ID() > 0 && !Plugin::$instance->documents->get(get_the_ID())->is_built_with_elementor())) {
+            if (empty($this->loaded_elements)) {
+                return;
+            }
+        }
+
         // update page data
-        update_option($this->uid . '_elements', $this->loaded_elements);
-        update_option($this->uid . '_custom_js', $this->custom_js_strings);
-        update_option($this->uid . '_updated_at', get_option('eael_editor_updated_at'));
+        update_option($this->uid . '_eael_elements', $this->loaded_elements,false);
+        update_option($this->uid . '_eael_custom_js', $this->custom_js_strings,false);
+        update_option($this->uid . '_eael_updated_at', get_option('eael_editor_updated_at'),false);
 
         // remove old cache files
         $this->remove_files($this->uid);
@@ -306,7 +322,7 @@ trait Generator
         }
 
         if ($this->request_requires_update == false && $context == 'view' && $ext == 'js') {
-            $output .= get_option($this->uid . '_custom_js');
+            $output .= get_option($this->uid . '_eael_custom_js');
         }
 
         return $output;
@@ -351,4 +367,16 @@ trait Generator
 
         return array_unique(array_merge($lib['view'], $lib['edit'], $self['general'], $self['edit'], $self['view']));
     }
+
+	/**
+	 * If Page are protected by password, EA dynamic widget asset not loading properly
+	 * Update  _updated_at field to regenerated asset
+	 */
+	public function check_password_protected_post() {
+		if ( isset( $_COOKIE[ 'wp-postpass_' . COOKIEHASH ] ) && $this->is_preview_mode() ) {
+			update_option($this->uid . '_eael_updated_at', get_option('eael_editor_updated_at'),false);
+			return true;
+		}
+		return false;
+	}
 }

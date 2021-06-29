@@ -241,7 +241,7 @@ $site_import_options = apply_filters(
 			</div>
 			<# if ( site_type && 'free' !== site_type ) { #>
 				<?php /* translators: %s are white label strings. */ ?>
-				<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Agency" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+				<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Premium" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Premium', 'astra-sites' ); ?></div>
 			<# } #>
 		</div>
 	</div>
@@ -330,7 +330,7 @@ $site_import_options = apply_filters(
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
 						<?php /* translators: %s are white label strings. */ ?>
-						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Agency" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Premium" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Premium', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -391,7 +391,7 @@ $site_import_options = apply_filters(
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
 						<?php /* translators: %s are white label strings. */ ?>
-						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Agency" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Premium" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Premium', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -410,13 +410,13 @@ $site_import_options = apply_filters(
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( 'This is a premium template available with \'Agency\' package. you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( __( 'This is a premium template available with Essential Bundle and Growth Bundle. You can purchase one of the bundles from <a href="%s" target="_blank">here</a> to get access to this premium template.', 'astra-sites' ), 'https://wpastra.com/pricing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 	<p>
 		<?php
 			/* translators: %s is article link */
-			printf( __( 'If you already own an Agency pack. Read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/starter-templates-complete-site/' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( __( 'If you already own Essential Bundle or Growth Bundle, read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/starter-templates-complete-site/' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 </script>
@@ -444,7 +444,7 @@ $site_import_options = apply_filters(
 
 <?php
 /**
- * TMPL - Invalid Mini Agency License
+ * TMPL - Invalid Essential Bundle License
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-invalid-mini-agency-license">
@@ -460,7 +460,7 @@ $site_import_options = apply_filters(
 		}
 
 		/* translators: %s is pricing page link */
-		printf( __( '<p>Seems like you have purchased the %4$s \'Mini Agency\' package with a choice of \'%1$s\' page builder addon.</p><p>While this template is built with \'%2$s\' page builder addon.</p><p>Read article <a href="%3$s" target="_blank">here</a> to see how you can proceed.</p>', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( Astra_Sites_White_Label::get_instance()->get_white_label_link( 'https://wpastra.com/docs/not-valid-license/' ) ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( __( '<p>Seems like you have purchased the %4$s \'Essential Bundle\' package with a choice of \'%1$s\' page builder addon.</p><p>While this template is built with \'%2$s\' page builder addon.</p><p>Read article <a href="%3$s" target="_blank">here</a> to see how you can proceed.</p>', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( Astra_Sites_White_Label::get_instance()->get_white_label_link( 'https://wpastra.com/docs/not-valid-license/' ) ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 </script>
@@ -634,13 +634,65 @@ $site_import_options = apply_filters(
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-request-failed">
-	<p><?php esc_html_e( 'Your website is facing a temporary issue connecting to the template server.', 'astra-sites' ); ?></p>
+	<p><?php esc_html_e( 'We could not start the import process. This is the message from HTTP request:', 'astra-sites' ); ?></p>
+	<p>
+	<?php
+		/* translators: %s doc link. */
+		printf( __( 'Please raise a <a href="%s" target="_blank">support request</a> so we can help you with it.', 'astra-sites' ), 'hhttps://wpastra.com/support/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
+	</p>
+</script>
+<?php
+/**
+ * TMPL - Import Process Interrupted - User end
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-request-failed-user">
+	<p>{{{ data.primary }}}</p>
+	<# if ( 'Cloudflare' === data.error.code ) { #>
+		<div class="current-importing-status">{{{ data.error.message + ' (' + data.error.code + ')' }}}</div>
+	<# } else { #>
+		<div class="current-importing-status">{{{ data.error.code }}} - {{{ data.error.message }}}</div>
+	<# } #>
+	<# if ( 'WP_Error' === data.error.code ) { #>
 	<p>
 		<?php
 		/* translators: %s doc link. */
-		printf( __( 'Read an article <a href="%s" target="_blank">here</a> to resolve the issue.', 'astra-sites' ), 'https://wpastra.com/docs/import-process-interrupted/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( __( 'We have listed the <a href="%s" target="_blank">possible solutions here</a> to help you resolve this.', 'astra-sites' ), 'https://wpastra.com/docs/fix-starter-template-importing-issues/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
+	<# } else if ( 'Cloudflare' === data.error.code ) { #>
+	<p>
+		<# if ( '522' == data.error.response_code ) { #>
+			<?php
+			/* translators: %s doc link. */
+			printf( __( 'Please <a class="ast-try-again" href="">click here and try again</a>. If this still does not work after few attempts, please report it <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+		<# } else { #>
+			<?php
+			/* translators: %s doc link. */
+			printf( __( 'Please report this error <a href="%s" target="_blank">here</a> so we can fix it.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+		<# } #>
+	</p>
+	<# } else { #>
+	<p>
+		<?php
+		$ip       = Astra_Sites_Helper::get_client_ip();
+		$url_text = __( 'Please report this error <a href="#LINK" target="_blank">here</a> so we can fix it.', 'astra-sites' );
+		$url      = 'https://wpastra.com/starter-templates-support/?ip=' . $ip;
+		?>
+		<#
+		var url = '<?php echo $url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>';
+		url += '&template-id=' + data.id;
+		url += '&subject=' + data.error.code + ' - ' + data.error.message;
+
+		var url_text = '<?php echo $url_text; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>';
+		url_text = url_text.replace( "#LINK", url );
+		#>
+		{{{url_text}}}
+	</p>
+	<# } #>
 </script>
 
 <?php
@@ -731,7 +783,7 @@ $site_import_options = apply_filters(
 				</div>
 				<div class="subscription-footer">
 					<?php /* translators: %1$s and %3$s are opening anchor tags, and %2$s and %4$s is closing anchor tags. */ ?>
-					<p><?php printf( __( 'By submitting, you agree to our %1$sTerms%2$s and %3$sPrivacy Policy%4$s.', 'astra-sites' ), '<a href="https://store.brainstormforce.com/terms-and-conditions/" target="_blank">', '<a>', '<a href="https://store.brainstormforce.com/privacy-policy/" target="_blank">', '<a>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+					<p><?php printf( __( 'By submitting, you agree to our %1$sTerms%2$s and %3$sPrivacy Policy%4$s.', 'astra-sites' ), '<a href="https://store.brainstormforce.com/terms-and-conditions/" target="_blank">', '</a>', '<a href="https://store.brainstormforce.com/privacy-policy/" target="_blank">', '</a>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 					<a href="#" class="button-subscription-skip"><?php esc_html_e( 'Skip', 'astra-sites' ); ?></a>
 				</div>
 			</div>
@@ -752,29 +804,17 @@ $site_import_options = apply_filters(
 					<div class="astra-sites-advanced-options-wrap">
 
 						<?php if ( true === $subscription_status ) : ?>
-							<p><?php esc_html_e( 'To serve more beautiful starter templates, we would like to know more about you:', 'astra-sites' ); ?></p>
+							<p class="user-building-for-title"><?php esc_html_e( 'To serve more beautiful starter templates, we would like to know more about you:', 'astra-sites' ); ?></p>
 						<?php endif; ?>
 
 						<div id="astra-sites-subscription-form-one" class="subscription-form astra-sites-subscription-form-one"></div>
 
-						<h2 class="astra-sites-advanced-options-heading">Advanced Options <span class="dashicons dashicons-arrow-down-alt2"></span></h2>
+						<h2 class="astra-sites-advanced-options-heading"><?php esc_html_e( 'Advanced Options', 'astra-sites' ); ?> <span class="dashicons dashicons-arrow-right-alt2"></span></h2>
 
 						<div class="astra-sites-advanced-options">
 							<ul class="astra-site-contents">
 
 								<# if( 'astra-sites' === data ) { #>
-									<?php
-									$first_import_complete = get_option( 'astra_sites_import_complete', '' );
-									if ( ! empty( $first_import_complete ) ) :
-										?>
-									<li class="astra-sites-reset-data">
-										<label>
-											<input type="checkbox" name="reset" class="checkbox" <?php checked( 'reset', true ); ?>>
-											<strong><?php esc_html_e( 'Delete Previously Imported Site', 'astra-sites' ); ?></strong>
-											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p><p><?php esc_html_e( 'You can find the backup to the current customizer settings at ', 'astra-sites' ); ?><code><?php esc_html_e( '/wp-content/uploads/astra-sites/', 'astra-sites' ); ?></code></p></div>
-										</label>
-									</li>
-									<?php endif; ?>
 
 									<?php $theme_status = Astra_Sites::get_instance()->get_theme_status(); ?>
 									<?php $theme_dependancy_class = ''; ?>
@@ -883,5 +923,19 @@ $site_import_options = apply_filters(
 	</div>
 </script>
 
+<script type="text/template" id="tmpl-astra-sites-delete-previous-site">
+	<li class="astra-sites-reset-data">
+		<label>
+			<input type="checkbox" name="reset" class="checkbox" <?php checked( 'reset', true ); ?>>
+			<strong><?php esc_html_e( 'Delete Previously Imported Site', 'astra-sites' ); ?></strong>
+			<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p>
+			<?php if ( ! Astra_Sites_White_Label::get_instance()->is_white_labeled() ) { ?>
+			<p><?php esc_html_e( 'You can find the backup to the current customizer settings at ', 'astra-sites' ); ?><code><?php esc_html_e( '/wp-content/uploads/astra-sites/', 'astra-sites' ); ?></code></p>
+			<?php } ?>
+			</div>
+		</label>
+	</li>
+
+</script>
 <?php
 wp_print_admin_notice_templates();

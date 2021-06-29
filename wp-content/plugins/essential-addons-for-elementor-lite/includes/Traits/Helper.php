@@ -24,7 +24,7 @@ trait Helper
     {
         $ajax   = wp_doing_ajax();
 
-        parse_str($_REQUEST['args'], $args);
+        parse_str($_POST['args'], $args);
         if ( empty( $_POST['nonce'] ) ) {
             $err_msg = __( 'Insecure form submitted without security token', 'essential-addons-for-elementor-lite' );
             if ( $ajax ) {
@@ -98,10 +98,20 @@ trait Helper
 
         }
 
+        $link_settings = [
+            'image_link_nofollow' => $settings['image_link_nofollow'] ? 'rel="nofollow"' : '',
+            'image_link_target_blank' => $settings['image_link_target_blank'] ? 'target="_blank"' : '',
+            'title_link_nofollow' => $settings['title_link_nofollow'] ? 'rel="nofollow"' : '',
+            'title_link_target_blank' => $settings['title_link_target_blank'] ? 'target="_blank"' : '',
+            'read_more_link_nofollow' => $settings['read_more_link_nofollow'] ? 'rel="nofollow"' : '',
+            'read_more_link_target_blank' => $settings['read_more_link_target_blank'] ? 'target="_blank"' : '',
+        ];
+
         $template_info = $_REQUEST['template_info'];
 
 
         if ( $template_info ) {
+
             if ( $template_info[ 'dir' ] === 'free' ) {
                 $file_path = EAEL_PLUGIN_PATH;
             }
@@ -111,7 +121,7 @@ trait Helper
             }
 
             $file_path = sprintf(
-                '%sincludes/Template/%s/%s.php',
+                '%sincludes/Template/%s/%s',
                 $file_path,
                 $template_info[ 'name' ],
                 $template_info[ 'file_name' ]
@@ -139,7 +149,7 @@ trait Helper
                     while ( $query->have_posts() ) {
                         $query->the_post();
 
-                        $html .= HelperClass::include_with_variable( $file_path, [ 'settings' => $settings, 'iterator' => $iterator ] );
+                        $html .= HelperClass::include_with_variable( $file_path, [ 'settings' => $settings, 'link_settings' => $link_settings, 'iterator' => $iterator ] );
                         $iterator++;
                     }
                 }
@@ -509,7 +519,7 @@ trait Helper
             'data-nonce'     => wp_create_nonce( 'load_more' ),
             'data-template'  => json_encode([
                 'dir'   => $plugin_type,
-                'file_name' => $settings['eael_dynamic_template_Layout'],
+                'file_name' => $settings['loadable_file_name'],
                 'name' => $this->process_directory_name() ],
                 1),
             'data-class'    => get_class( $this ),
@@ -518,7 +528,7 @@ trait Helper
             'data-args'     => http_build_query( $args ),
         ]);
         if ( ('true' == $settings['show_load_more'] || 1 == $settings['show_load_more'] || 'yes' == $settings['show_load_more']) && $args['posts_per_page'] != '-1' ) { ?>
-            <div class="eael-load-more-button-wrap">
+            <div class="eael-load-more-button-wrap<?php echo "eael-dynamic-filterable-gallery" == $this->get_name() ? " dynamic-filter-gallery-loadmore" : ""; ?>">
                 <button <?php $this->print_render_attribute_string( 'load-more' ); ?>>
                     <div class="eael-btn-loader button__loader"></div>
                     <span><?php echo esc_html($settings['show_load_more_text']) ?></span>
@@ -699,14 +709,24 @@ trait Helper
 	public function eael_product_add_to_cart () {
 
 		$ajax   = wp_doing_ajax();
+		$cart_items = isset($_POST['cart_item_data'])?$_POST['cart_item_data']:[];
+		$variation = [];
+		if(!empty($cart_items)){
+			foreach ($cart_items as $key => $value) {
+				if (preg_match("/^attribute*/", $value['name'])) {
+					$variation[$value['name']] = $value['value'];
+				}
+			}
+		}
 
 		if(isset($_POST['product_data'])){
 			foreach ($_POST['product_data'] as $item){
 				$product_id   = isset( $item['product_id'] ) ? sanitize_text_field( $item['product_id'] ) : 0;
 				$variation_id = isset( $item['variation_id'] ) ? sanitize_text_field( $item['variation_id'] ) : 0;
 				$quantity     = isset( $item['quantity'] ) ? sanitize_text_field( $item['quantity'] ) : 0;
+
 				if ( $variation_id ) {
-					WC()->cart->add_to_cart( $product_id, $quantity, $variation_id );
+					WC()->cart->add_to_cart( $product_id, $quantity, $variation_id, $variation );
 				} else {
 					WC()->cart->add_to_cart( $product_id, $quantity );
 				}
@@ -791,12 +811,47 @@ trait Helper
 
     public function templately_promo_status() {
         check_ajax_referer( 'essential-addons-elementor', 'security' );
+
+        if(!current_user_can('manage_options')){
+            wp_send_json_error(__('you are not allowed to do this action', 'essential-addons-for-elementor-lite'));
+        }
+
         $status = update_option( 'eael_templately_promo_hide', true );
         if ( $status ) {
             wp_send_json_success();
         } else {
             wp_send_json_error();
         }
+    }
+
+	/**
+	 * Retrieve product quick view data
+     *
+     * @return string
+	 */
+    public function eael_product_quickview_popup(){
+	    //check nonce
+	    check_ajax_referer( 'essential-addons-elementor', 'security' );
+	    $widget_id  = sanitize_key( $_POST[ 'widget_id' ] );
+	    $product_id = absint( $_POST[ 'product_id' ] );
+	    $page_id    = absint( $_POST[ 'page_id' ] );
+
+	    if ( $widget_id == '' && $product_id == '' && $page_id == '' ) {
+		    wp_send_json_error();
+	    }
+
+	    global $post, $product;
+	    $product = wc_get_product( $product_id );
+	    $post    = get_post( $product_id );
+	    setup_postdata( $post );
+
+	    $settings = $this->eael_get_widget_settings( $page_id, $widget_id );
+	    ob_start();
+	    HelperClass::eael_product_quick_view( $product, $settings, $widget_id );
+	    $data = ob_get_clean();
+	    wp_reset_postdata();
+
+	    wp_send_json_success( $data );
     }
 	
 }

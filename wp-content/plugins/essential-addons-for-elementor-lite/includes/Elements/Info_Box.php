@@ -1454,7 +1454,7 @@ class Info_Box extends Widget_Base
                 'type' => Controls_Manager::COLOR,
                 'default' => '',
                 'selectors' => [
-                    '{{WRAPPER}} .eael-infobox:hover .infobox-content h4' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .eael-infobox:hover .infobox-content .title' => 'color: {{VALUE}};',
                 ],
             ]
         );
@@ -1521,7 +1521,7 @@ class Info_Box extends Widget_Base
         <?php if ('yes' == $settings['eael_show_infobox_clickable']): ?><a href="<?php echo esc_url($settings['eael_show_infobox_clickable_link']['url']) ?>" <?php echo $target; ?> <?php echo $nofollow; ?>><?php endif;?>
             <div <?php echo $this->get_render_attribute_string('eael_infobox_inner'); ?>>
             <?php
-echo ob_get_clean();
+        echo ob_get_clean();
     }
 
 	/**
@@ -1618,7 +1618,7 @@ if ('yes' == $settings['eael_show_infobox_clickable']): ?></a><?php endif;
 
         </div>
     <?php
-echo ob_get_clean();
+        echo ob_get_clean();
     }
 
     protected function render_infobox_content()
