@@ -4231,6 +4231,9 @@ var link = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
 
+/**
+ * WordPress dependencies
+ */
 
 /**
  * WordPress dependencies
@@ -4244,6 +4247,7 @@ var blockDefault = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["creat
 }));
 /* harmony default export */ __webpack_exports__["a"] = (blockDefault);
 
+/***/ }),
 
 /***/ }),
 
@@ -4256,6 +4260,9 @@ var blockDefault = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["creat
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
 
+/**
+ * WordPress dependencies
+ */
 
 /**
  * WordPress dependencies
@@ -4269,6 +4276,7 @@ var plus = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement
 }));
 /* harmony default export */ __webpack_exports__["a"] = (plus);
 
+/***/ }),
 
 /***/ }),
 
@@ -4281,6 +4289,9 @@ var plus = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7);
 /* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__);
 
+/**
+ * WordPress dependencies
+ */
 
 /**
  * WordPress dependencies
@@ -4294,6 +4305,7 @@ var search = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createEleme
 }));
 /* harmony default export */ __webpack_exports__["a"] = (search);
 
+/***/ }),
 
 /***/ }),
 
@@ -4499,6 +4511,9 @@ var pencil = Object(external_wp_element_["createElement"])(external_wp_primitive
 "use strict";
 /*istanbul ignore start*/
 
+function matchQuery(mediaQuery, values) {
+    return parseQuery(mediaQuery).some(function (query) {
+        var inverse = query.inverse;
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -4534,6 +4549,10 @@ function diffChars(oldStr, newStr, options) {
   return characterDiff.diff(oldStr, newStr, options);
 }
 
+                case 'resolution':
+                    expValue = toDpi(expValue);
+                    value    = toDpi(value);
+                    break;
 
 /***/ }),
 
@@ -4547,7 +4566,13 @@ Copyrights licensed under the New BSD License.
 See the accompanying LICENSE file for terms.
 */
 
+        return (expressionsMatch && !inverse) || (!expressionsMatch && inverse);
+    });
+}
 
+function parseQuery(mediaQuery) {
+    return mediaQuery.split(',').map(function (query) {
+        query = query.trim();
 
 exports.match = matchQuery;
 exports.parse = parseQuery;
@@ -5312,6 +5337,8 @@ Diff.prototype = {
       }
     } // Allow subclasses to massage the input prior to running
 
+Diff.prototype = {
+  /*istanbul ignore start*/
 
     oldString = this.castInput(oldString);
     newString = this.castInput(newString);
@@ -7100,6 +7127,7 @@ Object(external_wp_hooks_["addFilter"])('blocks.getSaveContent.extraProps', 'cor
 // CONCATENATED MODULE: ./node_modules/@wordpress/block-editor/build-module/hooks/custom-class-name.js
 
 
+function custom_class_name_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function custom_class_name_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -7109,6 +7137,9 @@ function custom_class_name_objectSpread(target) { for (var i = 1; i < arguments.
  * External dependencies
  */
 
+/**
+ * WordPress dependencies
+ */
 
 /**
  * WordPress dependencies
@@ -8305,9 +8336,16 @@ function getBlockClientId(node) {
  */
 
 
+function getComputedStyle(node) {
+  return node.ownerDocument.defaultView.getComputedStyle(node);
+}
 
 
 
+  var _useState3 = Object(external_wp_element_["useState"])(),
+      _useState4 = Object(slicedToArray["a" /* default */])(_useState3, 2),
+      detectedColor = _useState4[0],
+      setDetectedColor = _useState4[1];
 
 function getComputedStyle(node) {
   return node.ownerDocument.defaultView.getComputedStyle(node);
@@ -9782,6 +9820,9 @@ function FontSizePicker(props) {
 // CONCATENATED MODULE: ./node_modules/@wordpress/block-editor/build-module/hooks/font-size.js
 
 
+function font_size_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function font_size_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { font_size_ownKeys(Object(source), true).forEach(function (key) { Object(defineProperty["a" /* default */])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { font_size_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function font_size_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -11035,6 +11076,7 @@ function __experimentalUseColors(colorConfigs) {
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/block-editor/build-module/components/colors/index.js
 
+// CONCATENATED MODULE: ./node_modules/@wordpress/block-editor/build-module/components/colors/index.js
 
 
 
@@ -20193,7 +20235,7 @@ function BlockTypesTab(_ref) {
       onHover: onHover,
       label: category.title
     }));
-  }), !uncategorizedItems.length && Object(external_wp_element_["createElement"])(panel, {
+  }), uncategorizedItems.length > 0 && Object(external_wp_element_["createElement"])(panel, {
     className: "block-editor-inserter__uncategorized-blocks-panel",
     title: Object(external_wp_i18n_["__"])('Uncategorized')
   }, Object(external_wp_element_["createElement"])(block_types_list, {
@@ -20351,6 +20393,11 @@ var use_patterns_state_usePatternsState = function usePatternsState(onInsert) {
  * Internal dependencies
  */
 
+var use_patterns_state_usePatternsState = function usePatternsState(onInsert) {
+  var _useSelect = Object(external_wp_data_["useSelect"])(function (select) {
+    var _select$getSettings = select('core/block-editor').getSettings(),
+        __experimentalBlockPatterns = _select$getSettings.__experimentalBlockPatterns,
+        __experimentalBlockPatternCategories = _select$getSettings.__experimentalBlockPatternCategories;
 
 
 
@@ -20799,11 +20846,20 @@ function useInsertionPoint(_ref) {
 
 
 
+    if (rootClientId || insertionIndex || clientId || isAppender) {
+      // If any of these arguments are set, we're in "manual mode"
+      // meaning the insertion point is set by the caller.
+      _destinationRootClientId = rootClientId;
 
 
 
 
 
+    if (!selectBlockOnInsert) {
+      var message = Object(external_wp_i18n_["sprintf"])( // translators: %d: the name of the block that has been added
+      Object(external_wp_i18n_["_n"])('%d block added.', '%d blocks added.', Object(external_lodash_["castArray"])(blocks).length), Object(external_lodash_["castArray"])(blocks).length);
+      Object(external_wp_a11y_["speak"])(message);
+    }
 
 function InserterSearchResults(_ref) {
   var filterValue = _ref.filterValue,
@@ -20966,6 +21022,7 @@ function InserterTabs(_ref) {
 /* harmony default export */ var inserter_tabs = (InserterTabs);
 
 // CONCATENATED MODULE: ./node_modules/@wordpress/block-editor/build-module/components/inserter/menu.js
+
 
 
 
@@ -21141,12 +21198,26 @@ function InserterMenu(_ref) {
 
 
 
+  /* translators: Blocks tab title in the block inserter. */
+  title: Object(external_wp_i18n_["__"])('Blocks')
+};
+var tabs_patternsTab = {
+  name: 'patterns',
 
 
 /**
  * Internal dependencies
  */
 
+function InserterTabs(_ref) {
+  var children = _ref.children,
+      _ref$showPatterns = _ref.showPatterns,
+      showPatterns = _ref$showPatterns === void 0 ? false : _ref$showPatterns,
+      _ref$showReusableBloc = _ref.showReusableBlocks,
+      showReusableBlocks = _ref$showReusableBloc === void 0 ? false : _ref$showReusableBloc,
+      onSelect = _ref.onSelect;
+  var tabs = Object(external_wp_element_["useMemo"])(function () {
+    var tempTabs = [tabs_blocksTab];
 
 
 
@@ -21929,6 +22000,11 @@ function onBlockDrop(targetRootClientId, targetBlockIndex, getBlockIndex, getCli
       // nested blocks, return early as this would create infinite
       // recursion.
 
+      if (sourceRootClientId === targetRootClientId && sourceBlockIndex === targetBlockIndex) {
+        return;
+      } // If the user is attempting to drop a block within its own
+      // nested blocks, return early as this would create infinite
+      // recursion.
 
       if (sourceClientIds.includes(targetRootClientId) || getClientIdsOfDescendants(sourceClientIds).some(function (id) {
         return id === targetRootClientId;
@@ -22431,7 +22507,16 @@ function InsertionPointPopover(_ref2) {
     if (event.target !== ref.current) {
       setIsInserterForced(true);
     }
-  }
+  } // Only show the inserter when there's a `nextElement` (a block after the
+  // insertion point). At the end of the block list the trailing appender
+  // should serve the purpose of inserting blocks.
+
+
+  var showInsertionPointInserter = !isHidden && nextElement && (isInserterShown || isInserterForced); // Show the indicator if the insertion point inserter is visible, or if
+  // the `showInsertionPoint` state is `true`. The latter is generally true
+  // when hovering blocks for insertion in the block library.
+
+  var showInsertionPointIndicator = showInsertionPointInserter || !isHidden && showInsertionPoint;
   /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
   // While ideally it would be enough to capture the
   // bubbling focus event from the Inserter, due to the
@@ -22439,7 +22524,6 @@ function InsertionPointPopover(_ref2) {
   // Firefox and Safari, it is not reliable.
   //
   // See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
-
 
   return Object(external_wp_element_["createElement"])(external_wp_components_["Popover"], {
     noArrow: true,
@@ -22455,9 +22539,9 @@ function InsertionPointPopover(_ref2) {
     onFocus: onFocus,
     className: className,
     style: style
-  }, !isHidden && (showInsertionPoint || isInserterShown || isInserterForced) && Object(external_wp_element_["createElement"])("div", {
+  }, showInsertionPointIndicator && Object(external_wp_element_["createElement"])("div", {
     className: "block-editor-block-list__insertion-point-indicator"
-  }), !isHidden && (isInserterShown || isInserterForced) && Object(external_wp_element_["createElement"])(InsertionPointInserter, {
+  }), showInsertionPointInserter && Object(external_wp_element_["createElement"])(InsertionPointInserter, {
     rootClientId: rootClientId,
     clientId: nextClientId,
     setIsInserterForced: setIsInserterForced
